@@ -1,0 +1,14 @@
+library(MASS)
+library(tree)
+options(scipen = 4)
+set.seed(1)
+train <- sample(1:nrow(Boston), nrow(Boston)/2)
+tree.boston <- tree(medv ~ . ,Boston,subset=train)
+summary(tree.boston)
+# Run CV
+cv.boston <- cv.tree(tree.boston)
+plot(cv.boston$size,cv.boston$dev,type='b')
+#Prune the Tree
+prune.boston <- prune.tree(tree.boston,best=5)
+plot(prune.boston)
+text(prune.boston,pretty=0)

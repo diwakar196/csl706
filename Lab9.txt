@@ -1,0 +1,13 @@
+library(MASS)
+options(scipen = 4)
+View(Boston)
+set.seed(1)
+train <- sample(1:nrow(Boston), nrow(Boston)/2)
+tree.boston <- tree(medv ~ . ,Boston,subset=train)
+summary(tree.boston)
+# Run CV
+cv.boston <- cv.tree(tree.boston)
+plot(cv.boston$size,cv.boston$dev,type='b')
+#Prune tree
+plot(prune.boston)
+text(prune.boston,pretty=0)
